@@ -1,0 +1,12 @@
+#!/bin/bash
+echo(mkdir .config )
+echo ($SAI nvim tilix dunst neofetch htop
+#echo(cd ~/.config && mkdir i3 && i3status )
+echo(сp config ~/.config/i3 && cd ~/.config )
+$CD = "cd ~/.config"
+$CON = "~/.config"
+$SAI = "sudo apt install"
+echo( cp configstatus $CON/i3status )
+echo ($CD)
+#echo (cp ~/reconfigure/nvim $CON)
+
