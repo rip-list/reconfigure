@@ -1,14 +1,8 @@
 
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 10
-# font, it doesn’t scale on retina/hidpi displays.
 
 font pango:Tewi, Icons 10
  
@@ -41,8 +35,8 @@ for_window [class="^Tunar$" instance="^file_progress$"] floating enable
 for_window [window_role="nitrogen"] floating enable 
 for_window [window_role="vlc"] floating enable
 #compton
-exec --no-startup-id compton -f --vsync drm
-#громкость 
+exec --no-startup-id picom 
+bindsym $mod+shift+f exec pcmanfm 
 bindsym Ctrl+F8 exec pactl set-sink-volume 0 +5%
 bindsym Ctrl+F7 exec pactl set-sink-volume 0 -5%
 
@@ -52,10 +46,31 @@ floating_modifier $mod
 #Отключение заголовков окон
 for_window [tiling] border pixel 3
 default_border pixel
-#autostart
 
+### i3-gaps ###
+# Borders for windows
+for_window [class=".*"] border pixel 5
+
+# Gaps for i3bar
+for_window [class="i3bar"] gaps outer current set 10
+
+# Gaps
+gaps inner 10
+gaps outer 4
+
+### Topbar and color theme ###
+# Color theme of borders
+client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+client.focused_inactive     #2f343f #kf343f #d8dee8 #2f343f #2f343f
+client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background           #2f343f
+
+#autostart
+exec ~/keyboard.sh
 exec --no-startup-id flameshot  
-#exec --no-startup-id nitrogen --restore
+exec --no-startup-id nitrogen --restore
 # start a terminal
 bindsym $mod+Return exec tilix
 #телеграм 
@@ -64,21 +79,17 @@ bindsym $mod+t exec Telegram
 bindsym $mod+b exec firefox
 #скриншот
 bindsym Print exec flameshot gui
+
+bindsym $mod+p exec  pavucontrol
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# start program launcher
+bindsym $mod+d exec --no-startup-id rofi -show run
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+#
+bindsym $mod+Shift+l exec i3lock -c 4f5372
+
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -86,11 +97,6 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -118,11 +124,11 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# focus the parent container  
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+shift+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -183,13 +189,6 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    status_command i3status
-    font pango:PT Sans 10
-      colors {
-    focused_workspace #93b3a3 #3c3b37 #93b3a3
-    active_workspace #ffcfaf #3c3b37 #ffcfaf
-    inactive_workspace #636363 #3c3b37 #dcdccc
-    urgent_workspace #dca3a3 #3c3b37 #dca3a3
- }
-}
+
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec polybar 
